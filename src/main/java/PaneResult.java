@@ -15,7 +15,7 @@ public class PaneResult extends JPanel {
         this.removeAll();
         this.setLayout(null);
         BufferedReader reader = new BufferedReader(new FileReader(new File("/Users/jameschen/Dropbox/ZZLab/Project/Progeny_Simulator/src/main/resources/output.txt")));
-        int xbUp = 800, xbLow = 0, ybUp = 550, ybLow = 0;
+        int xbUp = 800, xbLow = 90, ybUp = 550, ybLow = 0;
         int index1 = 0, index2 = 0;
 
         String tempRead;
@@ -25,7 +25,7 @@ public class PaneResult extends JPanel {
         EyeColor eye = null;
         Glasses glasses;
         int height;
-        for (int i = 0; i < 20; i ++) {
+        for (int i = 0; i < 16; i ++) {
             index1 = i * 2;
             index2 = i * 2 + 1;
 
@@ -50,18 +50,23 @@ public class PaneResult extends JPanel {
             tempRead = reader.readLine();
             height = Integer.parseInt(tempRead);
 
+            int x1 = 140 + (i % 4) * 200,
+                x2 = x1 + 100,
+                y = Math.round(i / 4) * 200;
             // Ini human
             rdmx = new Random().nextInt(xbUp - xbLow) + xbLow;
             rdmy = new Random().nextInt(ybUp - ybLow) + ybLow;
             stickmenoid[index1] = new Human(eye, hair, Gender.Male, glasses, height);
             this.add(stickmenoid[index1]);
-            stickmenoid[index1].setBounds(rdmx, rdmy, 500, 300);
+//            stickmenoid[index1].setBounds(rdmx, rdmy, 500, 300);
+            stickmenoid[index1].setBounds(x1, y, 500, 300);
 
             rdmx = new Random().nextInt(xbUp - xbLow) + xbLow;
             rdmy = new Random().nextInt(ybUp - ybLow) + ybLow;
             stickmenoid[index2] = new Human(eye, hair, Gender.Female, glasses, height);
             this.add(stickmenoid[index2]);
-            stickmenoid[index2].setBounds(rdmx, rdmy, 500, 300);
+//            stickmenoid[index2].setBounds(rdmx, rdmy, 500, 300);
+            stickmenoid[index2].setBounds(x2, y, 500, 300);
         }
     }
 }

@@ -23,14 +23,14 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener{
     public Simulator() {
         paneFather = new PaneConfig("Father");
         paneMother = new PaneConfig("Mother");
-        panePF = new JPanel(new MigLayout("", "[200!]", "[550!]"));
-        panePM = new JPanel(new MigLayout("", "[200!]", "[550!]"));
+        panePF = new JPanel(new MigLayout("", "[200!]", "[800!]"));
+        panePM = new JPanel(new MigLayout("", "[200!]", "[800!]"));
         humanFather = new Human(EyeColor.Blue, HairColor.Blonde, Gender.Male, Glasses.Normal, 175);
         humanMother = new Human(EyeColor.Blue, HairColor.Blonde, Gender.Female, Glasses.Normal, 175);
-        buttonSimulate = new JButton(("<html> -> </br> S </br> i </br> m </br> u  </br> l </br> a </br> t </br> e </br> -> </html>"));
+        buttonSimulate = new JButton(("<html> -> </br> -> </br> -> </br> Simulate </br> -> </br> -> </br> -> </br></html>"));
         buttonSimulate.setFont(new Font("Serif", Font.BOLD, 48));
         paneResult = new PaneResult();
-        pane = new JPanel(new MigLayout("", "[250!][250!][100!][1000!]", "[300!][550!]"));
+        pane = new JPanel(new MigLayout("", "[250!][250!][100!][1200!]", "[300!][800!]"));
 
         buttonSimulate.addActionListener(this);
         paneFather.comboEye.addActionListener(this);
@@ -51,10 +51,11 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener{
         panePM.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
                 "Preview", TitledBorder.CENTER, TitledBorder.TOP, null, Color.RED));
         pane.add(panePM, "grow, cell 1 1, align c");
-        pane.add(buttonSimulate, "grow, cell 2 0 1 3");
-        pane.add(paneResult, "grow, cell 3 0 1 3");
+        pane.add(buttonSimulate, "grow, cell 2 0 1 2");
+        pane.add(paneResult, "grow, cell 3 0 1 2");
         this.setContentPane(pane);
-        this.setSize(1600, 850);
+        this.pack();
+        this.setSize(1800, 1100);
         this.setTitle("Progeny Simulator");
         this.show();
     }
@@ -75,7 +76,7 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener{
         pr.write(paneMother.getHair() + "\n");
         pr.write(paneMother.getEye() + "\n");
         pr.write(paneMother.getSight() + "\n");
-        pr.write(paneMother.getHeightCM());
+        pr.write(paneMother.getHeightCM() + "\n");
         pr.flush();
         pr.close();
     }
@@ -84,11 +85,11 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener{
         Runtime runtime = Runtime.getRuntime();
         Process process = null;
         try {
-            process = runtime.exec("/Users/jameschen/Desktop/Sam.out");
+            process = runtime.exec("/Users/jameschen/Dropbox/ZZLab/Project/Progeny_Simulator/src/main/resources/Hackathon.out /Users/jameschen/Dropbox/ZZLab/Project/Progeny_Simulator/src/main/resources/input.txt /Users/jameschen/Dropbox/ZZLab/Project/Progeny_Simulator/src/main/resources/output.txt");
+            process.waitFor();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        process.waitFor();
     }
 
     void updateFather () {
@@ -146,15 +147,15 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener{
         if (source == buttonSimulate) {
             writeInput();
             try {
-//              callCPP();
+              callCPP();
                 this.paneResult.makeResult();
                 repaint();
             } catch (FileNotFoundException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {
                 e1.printStackTrace();
-//            } catch (InterruptedException e1) {
-//                e1.printStackTrace();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
             }
         } else if (source == paneFather.comboEye || source == paneFather.comboHair || source == paneFather.comboNearSight) {
             updateFather();
@@ -172,9 +173,3 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener{
         }
     }
 }
-
-
-//            reader = new BufferedReader(new FileReader(file));
-//            mfr = new FileWriter(file);
-//            mbr = new BufferedWriter(mfr);
-//            mout = new PrintWriter(mbr);
